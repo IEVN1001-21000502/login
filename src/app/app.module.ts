@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { ProductoListComponent } from './product/producto-list/producto-list.component';
 import { ProductoFilterPipe } from './product/producto-filter.pipe';
 import { Ejemplo1Component } from './formulario/ejemplo1/ejemplo1.component';
-import { SingInComponent } from './auth/features/sing-in/sing-in.component';
-import { SingUpComponent } from './auth/features/sing-up/sing-up.component';
+import SignUpComponent from "./auth/features/sign-up/sign-up.component"
+import SignInComponent from "./auth/features/sign-in/sign-in.component"
+
 
 
 @NgModule({
@@ -16,8 +17,8 @@ import { SingUpComponent } from './auth/features/sing-up/sing-up.component';
     ProductoListComponent,
     ProductoFilterPipe,
     Ejemplo1Component,
-    SingInComponent,
-    SingUpComponent,
+    SignUpComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,

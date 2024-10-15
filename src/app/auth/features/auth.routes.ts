@@ -2,11 +2,11 @@ import {Routes} from "@angular/router";
  
 export default[
     {
-        path: 'sing-in',
-        loadComponent:()=>import('./sing-in/sing-in.component'),  
+        path: 'sign-in',
+        loadComponent:()=>import('./sign-in/sign-in.component'),  
     },
     {
-        path: 'sing-up',
-        loadComponent:()=>import('./sing-up/'),  
+        path: 'sign-up',
+        loadComponent:()=>import('./sign-up/sign-up.component'),  
     },
 ]as Routes
