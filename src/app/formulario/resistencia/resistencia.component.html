@@ -1,0 +1,76 @@
+<div class="grid grid-cols-2 gap-4 p-10">
+    <!-- Formulario -->
+    <form
+      [formGroup]="formGroup"
+      (ngSubmit)="onSubmit()"
+      class="max-w-sm mx-auto">
+      
+      <div class="mb-5">
+        <label for="color1" class="block mb-2 text-sm font-medium text-gray-900">Primera Banda</label>
+        <select id="color1" formControlName="color1" class="w-full p-2.5 border border-gray-300 rounded-lg">
+          <option value="0" data-color="black">Negro</option>
+          <option value="1" data-color="brown">Café</option>
+          <option value="2" data-color="red">Rojo</option>
+          <option value="3" data-color="orange">Naranja</option>
+          <option value="4" data-color="yellow">Amarillo</option>
+          <!-- Agrega más colores según sea necesario -->
+        </select>
+      </div>
+  
+      <div class="mb-5">
+        <label for="color2" class="block mb-2 text-sm font-medium text-gray-900">Segunda Banda</label>
+        <select id="color2" formControlName="color2" class="w-full p-2.5 border border-gray-300 rounded-lg">
+          <option value="0" data-color="black">Negro</option>
+          <option value="1" data-color="brown">Café</option>
+          <option value="2" data-color="red">Rojo</option>
+          <option value="3" data-color="orange">Naranja</option>
+          <option value="4" data-color="yellow">Amarillo</option>
+          <!-- Agrega más colores según sea necesario -->
+        </select>
+      </div>
+  
+      <div class="mb-5">
+        <label for="color3" class="block mb-2 text-sm font-medium text-gray-900">Tercera Banda</label>
+        <select id="color3" formControlName="color3" class="w-full p-2.5 border border-gray-300 rounded-lg">
+          <option value="0" data-color="black">Negro</option>
+          <option value="1" data-color="brown">Café</option>
+          <option value="2" data-color="red">Rojo</option>
+          <option value="3" data-color="orange">Naranja</option>
+          <option value="4" data-color="yellow">Amarillo</option>
+          <!-- Agrega más colores según sea necesario -->
+        </select>
+      </div>
+  
+      <div class="mb-5">
+        <label class="block mb-2 text-sm font-medium text-gray-900">Tolerancia</label>
+        <div class="flex items-center">
+          <input type="radio" id="oro" formControlName="tolerancia" value="0.05" class="mr-2">
+          <label for="oro" class="mr-4">Oro</label>
+  
+          <input type="radio" id="plata" formControlName="tolerancia" value="0.1" class="mr-2">
+          <label for="plata">Plata</label>
+        </div>
+      </div>
+  
+      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg text-sm py-2.5">
+        Registrar
+      </button>
+    </form>
+  
+    <!-- Tabla -->
+    <table class="table-auto w-full mt-8 border-collapse border border-gray-300">
+      <thead>
+        <tr>
+          <th class="border px-4 py-2">Color1</th>
+          <th class="border px-4 py-2">Color2</th>
+          <th class="border px-4 py-2">Color3</th>
+          <th class="border px-4 py-2">Tolerancia</th>
+          <th class="border px-4 py-2">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí irán las filas con los datos -->
+      </tbody>
+    </table>
+  </div>
+  
