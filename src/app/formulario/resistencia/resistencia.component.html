@@ -1,76 +1,104 @@
-<div class="grid grid-cols-2 gap-4 p-10">
-    <!-- Formulario -->
-    <form
-      [formGroup]="formGroup"
-      (ngSubmit)="onSubmit()"
-      class="max-w-sm mx-auto">
-      
-      <div class="mb-5">
-        <label for="color1" class="block mb-2 text-sm font-medium text-gray-900">Primera Banda</label>
-        <select id="color1" formControlName="color1" class="w-full p-2.5 border border-gray-300 rounded-lg">
-          <option value="0" data-color="black">Negro</option>
-          <option value="1" data-color="brown">Café</option>
-          <option value="2" data-color="red">Rojo</option>
-          <option value="3" data-color="orange">Naranja</option>
-          <option value="4" data-color="yellow">Amarillo</option>
-          <!-- Agrega más colores según sea necesario -->
-        </select>
+<div class="p-10 justify-center">
+  <!-- Formulario -->
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="w-full max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Calculadora de Resistencia</h2>
+    <div class="mb-5">
+      <label for="color1" class="block mb-2 text-sm font-medium text-gray-900">Primera Banda</label>
+      <select id="color1" formControlName="color1" class="w-full p-2.5 border border-gray-300 rounded-lg">
+        <option value="0" style="background-color: black; color: white;">Negro</option>
+        <option value="1" style="background-color: brown; color: white;">Marrón</option>
+        <option value="2" style="background-color: red; color: white;">Rojo</option>
+        <option value="3" style="background-color: orange;">Naranja</option>
+        <option value="4" style="background-color: yellow;">Amarillo</option>
+        <option value="5" style="background-color: green; color: white;">Verde</option>
+        <option value="6" style="background-color: blue; color: white;">Azul</option>
+        <option value="7" style="background-color: violet;">Violeta</option>
+        <option value="8" style="background-color: gray;">Gris</option>
+        <option value="9" style="background-color: white;">Blanco</option>
+      </select>
+    </div>
+
+    <div class="mb-5">
+      <label for="color2" class="block mb-2 text-sm font-medium text-gray-900">Segunda Banda</label>
+      <select id="color2" formControlName="color2" class="w-full p-2.5 border border-gray-300 rounded-lg">
+        <option value="0" style="background-color: black; color: white;">Negro</option>
+        <option value="1" style="background-color: brown; color: white;">Marrón</option>
+        <option value="2" style="background-color: red; color: white;">Rojo</option>
+        <option value="3" style="background-color: orange;">Naranja</option>
+        <option value="4" style="background-color: yellow;">Amarillo</option>
+        <option value="5" style="background-color: green; color: white;">Verde</option>
+        <option value="6" style="background-color: blue; color: white;">Azul</option>
+        <option value="7" style="background-color: violet;">Violeta</option>
+        <option value="8" style="background-color: gray;">Gris</option>
+        <option value="9" style="background-color: white;">Blanco</option>
+      </select>
+    </div>
+
+    <div class="mb-5">
+      <label for="color3" class="block mb-2 text-sm font-medium text-gray-900">Tercera Banda (Multiplicador)</label>
+      <select id="color3" formControlName="color3" class="w-full p-2.5 border border-gray-300 rounded-lg">
+        <option value="1" style="background-color: black; color: white;">Negro (×1)</option>
+        <option value="10" style="background-color: brown; color: white;">Marrón (×10)</option>
+        <option value="100" style="background-color: red; color: white;">Rojo (×100)</option>
+        <option value="1000" style="background-color: orange;">Naranja (×1K)</option>
+        <option value="10000" style="background-color: yellow;">Amarillo (×10K)</option>
+        <option value="100000" style="background-color: green; color: white;">Verde (×100K)</option>
+        <option value="1000000" style="background-color: blue; color: white;">Azul (×1M)</option>
+        <option value="10000000" style="background-color: violet;">Violeta (×10M)</option>
+        <option value="100000000" style="background-color: gray;">Gris (×100M)</option>
+        <option value="1000000000" style="background-color: white;">Blanco (×1G)</option>
+      </select>
+    </div>
+
+    <div class="mb-5">
+      <label class="block mb-2 text-sm font-medium text-gray-900">Tolerancia</label>
+      <div class="flex items-center">
+        <input type="radio" id="oro" formControlName="tolerancia" value="0.05" class="mr-2">
+        <label for="oro" class="mr-4" style="color: goldenrod;">Oro (±5%)</label>
+        <input type="radio" id="plata" formControlName="tolerancia" value="0.1" class="mr-2">
+        <label for="plata" style="color: silver;">Plata (±10%)</label>
       </div>
-  
-      <div class="mb-5">
-        <label for="color2" class="block mb-2 text-sm font-medium text-gray-900">Segunda Banda</label>
-        <select id="color2" formControlName="color2" class="w-full p-2.5 border border-gray-300 rounded-lg">
-          <option value="0" data-color="black">Negro</option>
-          <option value="1" data-color="brown">Café</option>
-          <option value="2" data-color="red">Rojo</option>
-          <option value="3" data-color="orange">Naranja</option>
-          <option value="4" data-color="yellow">Amarillo</option>
-          <!-- Agrega más colores según sea necesario -->
-        </select>
-      </div>
-  
-      <div class="mb-5">
-        <label for="color3" class="block mb-2 text-sm font-medium text-gray-900">Tercera Banda</label>
-        <select id="color3" formControlName="color3" class="w-full p-2.5 border border-gray-300 rounded-lg">
-          <option value="0" data-color="black">Negro</option>
-          <option value="1" data-color="brown">Café</option>
-          <option value="2" data-color="red">Rojo</option>
-          <option value="3" data-color="orange">Naranja</option>
-          <option value="4" data-color="yellow">Amarillo</option>
-          <!-- Agrega más colores según sea necesario -->
-        </select>
-      </div>
-  
-      <div class="mb-5">
-        <label class="block mb-2 text-sm font-medium text-gray-900">Tolerancia</label>
-        <div class="flex items-center">
-          <input type="radio" id="oro" formControlName="tolerancia" value="0.05" class="mr-2">
-          <label for="oro" class="mr-4">Oro</label>
-  
-          <input type="radio" id="plata" formControlName="tolerancia" value="0.1" class="mr-2">
-          <label for="plata">Plata</label>
-        </div>
-      </div>
-  
-      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg text-sm py-2.5">
-        Registrar
-      </button>
-    </form>
-  
-    <!-- Tabla -->
-    <table class="table-auto w-full mt-8 border-collapse border border-gray-300">
-      <thead>
-        <tr>
-          <th class="border px-4 py-2">Color1</th>
-          <th class="border px-4 py-2">Color2</th>
-          <th class="border px-4 py-2">Color3</th>
-          <th class="border px-4 py-2">Tolerancia</th>
-          <th class="border px-4 py-2">Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Aquí irán las filas con los datos -->
-      </tbody>
-    </table>
+    </div>
+
+    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg text-sm py-2.5">
+      Calcular Resistencia
+    </button>
+  </form>
+
+  <!-- Botón Ver Tabla -->
+  <div class="col-span-2 text-center mt-4">
+    <button (click)="toggleTabla()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      {{ mostrarTabla ? 'Ocultar Tabla' : 'Ver Tabla' }}
+    </button>
   </div>
-  
+
+  <!-- Tabla (en un card) -->
+  <div *ngIf="mostrarTabla" class="col-span-2 mt-8">
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Color1</th>
+            <th class="border px-4 py-2">Color2</th>
+            <th class="border px-4 py-2">Color3 (Multiplicador)</th>
+            <th class="border px-4 py-2">Tolerancia</th>
+            <th class="border px-4 py-2">Valor</th>
+            <th class="border px-4 py-2">Valor Máximo</th>
+            <th class="border px-4 py-2">Valor Mínimo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let resistencia of resistencias">
+            <td class="border px-4 py-2">{{ obtenerColorNombre(resistencia.color1) }}</td>
+            <td class="border px-4 py-2">{{ obtenerColorNombre(resistencia.color2) }}</td>
+            <td class="border px-4 py-2">{{ obtenerColorMultiplicador(resistencia.color3) }}</td>
+            <td class="border px-4 py-2">{{ obtenerToleranciaNombre(resistencia.tolerancia) }}</td>
+            <td class="border px-4 py-2">{{ resistencia.valorResistencia }} Ω</td>
+            <td class="border px-4 py-2">{{ resistencia.ValorMaximo }} Ω</td>
+            <td class="border px-4 py-2">{{ resistencia.ValorMinimo }} Ω</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
