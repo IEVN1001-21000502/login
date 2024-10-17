@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-interface Resistencia {
+interface ResistenciaGuardada {
   color1: string;
   color2: string;
   color3: string;
   tolerancia: string;
+}
+
+interface ResistenciaCalculada extends ResistenciaGuardada {
   valorResistencia: number;
   ValorMaximo: number;
   ValorMinimo: number;
@@ -21,7 +24,8 @@ interface Resistencia {
 })
 export default class ResistenciaComponent implements OnInit {
   formGroup!: FormGroup;
-  resistencias: Resistencia[] = [];
+  resistenciasGuardadas: ResistenciaGuardada[] = [];
+  resistenciasCalculadas: ResistenciaCalculada[] = [];
   mostrarTabla: boolean = false;
 
   constructor(private readonly fb: FormBuilder) {}
@@ -42,61 +46,74 @@ export default class ResistenciaComponent implements OnInit {
 
   onSubmit(): void {
     const { color1, color2, color3, tolerancia } = this.formGroup.value;
-    let valor1 = parseInt(color1) * 10 + parseInt(color2);
-    let valor2 = parseInt(color3);
-    let tolerancia2 = parseFloat(tolerancia);
-    let valorResistencia = valor1 * valor2;
-    let ValorMaximo = valorResistencia + (valorResistencia * tolerancia2);
-    let ValorMinimo = valorResistencia - (valorResistencia * tolerancia2);
-
-    const nuevaResistencia: Resistencia = {
+    
+    const nuevaResistencia: ResistenciaGuardada = {
       color1,
       color2,
       color3,
-      tolerancia,
-      valorResistencia,
-      ValorMaximo,
-      ValorMinimo
+      tolerancia
     };
 
-    this.resistencias.push(nuevaResistencia);
+    this.resistenciasGuardadas.push(nuevaResistencia);
     this.guardarResistencias();
     this.formGroup.reset();
   }
 
   guardarResistencias(): void {
-    localStorage.setItem("resistencias", JSON.stringify(this.resistencias));
+    localStorage.setItem("resistencias", JSON.stringify(this.resistenciasGuardadas));
   }
 
   cargarResistencias(): void {
     const resistenciasGuardadas = localStorage.getItem("resistencias");
     if (resistenciasGuardadas) {
-      this.resistencias = JSON.parse(resistenciasGuardadas);
+      this.resistenciasGuardadas = JSON.parse(resistenciasGuardadas);
     }
   }
 
-  obtenerColorNombre(codigo: string): string {
-    const colores:any = {
-      '0': 'Negro', '1': 'Marrón', '2': 'Rojo', '3': 'Naranja', '4': 'Amarillo',
-      '5': 'Verde', '6': 'Azul', '7': 'Violeta', '8': 'Gris', '9': 'Blanco'
-    };
-    return colores[codigo] || codigo;
+  calcularResistencias(): void {
+    this.resistenciasCalculadas = this.resistenciasGuardadas.map(resistencia => {
+      const valor1 = this.obtenerValorColor(resistencia.color1) * 10 + this.obtenerValorColor(resistencia.color2);
+      const valor2 = this.obtenerValorMultiplicador(resistencia.color3);
+      const tolerancia2 = this.obtenerValorTolerancia(resistencia.tolerancia);
+      const valorResistencia = valor1 * valor2;
+      const ValorMaximo = valorResistencia + (valorResistencia * tolerancia2);
+      const ValorMinimo = valorResistencia - (valorResistencia * tolerancia2);
+
+      return {
+        ...resistencia,
+        valorResistencia,
+        ValorMaximo,
+        ValorMinimo
+      };
+    });
   }
 
-  obtenerColorMultiplicador(valor: string): string {
-    const multiplicadores:any = {
-      '1': 'Negro', '10': 'Marrón', '100': 'Rojo', '1000': 'Naranja',
-      '10000': 'Amarillo', '100000': 'Verde', '1000000': 'Azul',
-      '10000000': 'Violeta', '100000000': 'Gris', '1000000000': 'Blanco'
+  obtenerValorColor(color: string): number {
+    const colores: { [key: string]: number } = {
+      'black': 0, 'brown': 1, 'red': 2, 'orange': 3, 'yellow': 4,
+      'green': 5, 'blue': 6, 'violet': 7, 'gray': 8, 'white': 9
     };
-    return multiplicadores[valor] || valor;
+    return colores[color.toLowerCase()] || 0;
   }
+  
+  obtenerValorMultiplicador(color: string): number {
+    const multiplicadores: { [key: string]: number } = {
+      'black': 1, 'brown': 10, 'red': 100, 'orange': 1000,
+      'yellow': 10000, 'green': 100000, 'blue': 1000000,
+      'violet': 10000000, 'gray': 100000000, 'white': 1000000000
+    };
+    return multiplicadores[color.toLowerCase()] || 1;
+  }
+  
 
-  obtenerToleranciaNombre(valor: string): string {
-    return valor === '0.05' ? 'Oro (±5%)' : 'Plata (±10%)';
+  obtenerValorTolerancia(tolerancia: string): number {
+    return tolerancia === 'Oro' ? 0.05 : 0.1;
   }
 
   toggleTabla(): void {
     this.mostrarTabla = !this.mostrarTabla;
+    if (this.mostrarTabla) {
+      this.calcularResistencias();
+    }
   }
 }
