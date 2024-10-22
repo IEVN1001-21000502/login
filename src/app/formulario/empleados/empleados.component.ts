@@ -42,9 +42,11 @@ export default class EmpleadosComponent implements OnInit {
   onSubmit() {
     if (this.formGroup.valid) {
       const empleado: Empleado = this.formGroup.value;
-      empleado.horasPorPagar = Math.min(empleado.horasTrabajadas, 40);
-      empleado.horasExtras = Math.max(empleado.horasTrabajadas - 40, 0);
-      empleado.subtotal = empleado.horasPorPagar * 70 + empleado.horasExtras * 140;
+      let PreHorasPorPagar = Math.min(empleado.horasTrabajadas, 40);
+      let PreHorasExtras = Math.max(empleado.horasTrabajadas - 40, 0);
+      empleado.horasPorPagar = PreHorasPorPagar * 70;
+      empleado.horasExtras = PreHorasExtras *140;
+      empleado.subtotal = empleado.horasPorPagar  + empleado.horasExtras;
 
       this.empleados.push(empleado);
       this.saveEmpleados();
