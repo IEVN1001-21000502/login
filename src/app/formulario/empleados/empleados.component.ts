@@ -2,12 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-interface Empleado {
+// Interface para los datos base del empleado (lo que se guardará)
+interface EmpleadoBase {
   matricula: string;
   nombre: string;
   correo: string;
   edad: number;
   horasTrabajadas: number;
+}
+
+// Interface completa del empleado (incluyendo campos calculados)
+interface Empleado extends EmpleadoBase {
   horasPorPagar: number;
   horasExtras: number;
   subtotal: number;
@@ -39,16 +44,25 @@ export default class EmpleadosComponent implements OnInit {
     this.loadEmpleados();
   }
 
+  calcularCamposEmpleado(empleadoBase: EmpleadoBase): Empleado {
+    const horasPorPagar = Math.min(empleadoBase.horasTrabajadas, 40) * 70;
+    const horasExtras = Math.max(empleadoBase.horasTrabajadas - 40, 0) * 140;
+    const subtotal = horasPorPagar + horasExtras;
+
+    return {
+      ...empleadoBase,
+      horasPorPagar,
+      horasExtras,
+      subtotal
+    };
+  }
+
   onSubmit() {
     if (this.formGroup.valid) {
-      const empleado: Empleado = this.formGroup.value;
-      let PreHorasPorPagar = Math.min(empleado.horasTrabajadas, 40);
-      let PreHorasExtras = Math.max(empleado.horasTrabajadas - 40, 0);
-      empleado.horasPorPagar = PreHorasPorPagar * 70;
-      empleado.horasExtras = PreHorasExtras *140;
-      empleado.subtotal = empleado.horasPorPagar  + empleado.horasExtras;
-
-      this.empleados.push(empleado);
+      const empleadoBase: EmpleadoBase = this.formGroup.value;
+      const empleadoCompleto = this.calcularCamposEmpleado(empleadoBase);
+      
+      this.empleados.push(empleadoCompleto);
       this.saveEmpleados();
       this.formGroup.reset();
     }
@@ -79,7 +93,6 @@ export default class EmpleadosComponent implements OnInit {
 
   generarTabla() {
     this.calcularTotalAPagar();
-    // La tabla se actualiza automáticamente en el template
   }
 
   imprimirTabla() {
@@ -87,13 +100,23 @@ export default class EmpleadosComponent implements OnInit {
   }
 
   private saveEmpleados() {
-    localStorage.setItem('empleados', JSON.stringify(this.empleados));
+    // Solo guardamos los datos base de cada empleado
+    const empleadosBase: EmpleadoBase[] = this.empleados.map(({ matricula, nombre, correo, edad, horasTrabajadas }) => ({
+      matricula,
+      nombre,
+      correo,
+      edad,
+      horasTrabajadas
+    }));
+    localStorage.setItem('empleados', JSON.stringify(empleadosBase));
   }
 
   private loadEmpleados() {
     const storedEmpleados = localStorage.getItem('empleados');
     if (storedEmpleados) {
-      this.empleados = JSON.parse(storedEmpleados);
+      // Convertimos los datos base almacenados en empleados completos
+      const empleadosBase: EmpleadoBase[] = JSON.parse(storedEmpleados);
+      this.empleados = empleadosBase.map(empleadoBase => this.calcularCamposEmpleado(empleadoBase));
       this.calcularTotalAPagar();
     }
   }
