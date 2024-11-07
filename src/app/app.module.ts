@@ -8,6 +8,7 @@ import { ProductoFilterPipe } from './product/producto-filter.pipe';
 import Ejemplo1Component  from './formulario/ejemplo1/ejemplo1.component';
 import SignUpComponent from "./auth/features/sign-up/sign-up.component"
 import SignInComponent from "./auth/features/sign-in/sign-in.component"
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -17,6 +18,7 @@ import SignInComponent from "./auth/features/sign-in/sign-in.component"
     ProductoFilterPipe,
   ],
   imports: [
+    HttpClientModule,
     AppComponent,
     Ejemplo1Component,
     SignUpComponent,
